@@ -989,5 +989,98 @@ setupRevealSections();
   });
 })();
 </script>
+  <!-- 배경음악 : Gymnopédies -->
+<script>
+(function () {
+  const bgm = document.createElement('audio');
+  bgm.id = 'bgm';
+  bgm.src = 'gymnopedies.mp3';
+  bgm.loop = true;
+  bgm.preload = 'auto';
+  bgm.volume = 0.22;
+  document.body.appendChild(bgm);
+
+  const musicButton = document.createElement('button');
+  musicButton.type = 'button';
+  musicButton.innerHTML = '▷ GYMNOPÉDIES · PLAY';
+  musicButton.setAttribute('aria-label', '배경음악 재생 또는 정지');
+
+  Object.assign(musicButton.style, {
+    position: 'fixed',
+    top: '14px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    zIndex: '9999',
+    border: '1px solid rgba(47,41,34,.15)',
+    borderRadius: '999px',
+    padding: '7px 13px',
+    background: 'rgba(255,250,241,.88)',
+    backdropFilter: 'blur(8px)',
+    color: '#756b60',
+    fontSize: '11px',
+    letterSpacing: '.08em',
+    cursor: 'pointer',
+    boxShadow: '0 3px 12px rgba(47,41,34,.06)'
+  });
+
+  document.body.appendChild(musicButton);
+
+  let userPaused = false;
+
+  function updateLabel() {
+    musicButton.innerHTML = bgm.paused
+      ? '▷ GYMNOPÉDIES · PLAY'
+      : '♫ GYMNOPÉDIES · PLAYING';
+  }
+
+  function startBgm() {
+    if (userPaused) return;
+    bgm.play().then(updateLabel).catch(updateLabel);
+  }
+
+  musicButton.addEventListener('click', function () {
+    if (bgm.paused) {
+      userPaused = false;
+      bgm.play().catch(() => {});
+    } else {
+      userPaused = true;
+      bgm.pause();
+    }
+    updateLabel();
+  });
+
+  /* 자동재생 시도 */
+  startBgm();
+
+  /* 브라우저가 자동재생을 막으면 첫 클릭 순간 시작 */
+  function firstInteraction() {
+    startBgm();
+    document.removeEventListener('click', firstInteraction);
+    document.removeEventListener('keydown', firstInteraction);
+  }
+
+  document.addEventListener('click', firstInteraction);
+  document.addEventListener('keydown', firstInteraction);
+
+  /* 아이의 작품 설명이 재생될 때 배경음악 잠시 정지 */
+  document.addEventListener('play', function (e) {
+    if (e.target.tagName === 'AUDIO' && e.target !== bgm) {
+      bgm.pause();
+      updateLabel();
+    }
+  }, true);
+
+  /* 작품 설명이 끝나면 다시 배경음악 */
+  document.addEventListener('ended', function (e) {
+    if (e.target.tagName === 'AUDIO' && e.target !== bgm && !userPaused) {
+      bgm.play().catch(() => {});
+      updateLabel();
+    }
+  }, true);
+
+  bgm.addEventListener('play', updateLabel);
+  bgm.addEventListener('pause', updateLabel);
+})();
+</script>
 </body>
 </html>
