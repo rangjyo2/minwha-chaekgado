@@ -887,7 +887,7 @@ function renderGallery(children = data.children) {
       <div class="art-thumb">${artworkThumb(child)}</div>
       <div class="art-meta">
         <strong>${escapeHtml(child.name)}${child.age ? ` (${child.age})` : ""}</strong>
-        <span class="audio-badge">${child.absent ? "결석" : (child.audio ? "● ▶ 작품 설명 듣기" : "○ 음성 준비 중")}</span>
+        <span class="audio-badge">${child.absent ? "결석" : (child.audio ? "▶ 작품 설명 듣기" : "○ 음성 준비 중")}</span>
       </div>
     </button>
   `).join("");
