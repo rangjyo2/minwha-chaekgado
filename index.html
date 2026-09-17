@@ -845,7 +845,8 @@ data.children.forEach(child => {
   if (!child.absent) child.audio = `${child.name}.m4a`;
 });
 
-data.children.sort((a, b) => Number(a.absent) - Number(b.absent));
+data.children.sort((a, b) => (a.name === "박하온") - (b.name === "박하온"));
+    
 
 const $ = (selector) => document.querySelector(selector);
     
