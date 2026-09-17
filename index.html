@@ -701,9 +701,7 @@ footer p { margin:0; }
 
   <dialog class="modal" id="about-dialog">
     <div class="modal-panel about-modal-panel">
-      <button class="modal-close" id="about-close" type="button" aria-label="닫기">×</button>
-      <p class="eyebrow">ABOUT CHAEKGADO</p>
-      <h2 id="about-title">책가도 이야기</h2>
+<button class="about-button" id="about-open" type="button">첫화면으로</button>
       <div class="about-body" id="about-body"></div>
       <div class="about-note">
         <span>전시 관람 팁</span>
@@ -933,7 +931,11 @@ function setupDialogs() {
 
   $("#artwork-close").addEventListener("click", () => artworkDialog.close());
   $("#about-close").addEventListener("click", () => aboutDialog.close());
-  $("#about-open").addEventListener("click", () => aboutDialog.showModal());
+$("#about-open").addEventListener("click", () => {
+  $("#app-shell").hidden = true;
+  $("#entry-screen").hidden = false;
+  window.scrollTo(0, 0);
+});
 
   [artworkDialog, aboutDialog].forEach((dialog) => {
     dialog.addEventListener("click", (event) => {
