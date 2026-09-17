@@ -1085,4 +1085,29 @@ setupRevealSections();
 })();
 </script>
 </body>
+  <script>
+(function () {
+  const oldButton = document.getElementById('about-open');
+  const entry = document.getElementById('entry-screen');
+  const app = document.getElementById('app-shell');
+
+  if (!oldButton || !entry || !app) return;
+
+  /* 기존 '책가도 이야기' 기능을 없앤 새 버튼으로 교체 */
+  const homeButton = oldButton.cloneNode(true);
+  homeButton.textContent = '첫화면으로';
+  oldButton.replaceWith(homeButton);
+
+  homeButton.addEventListener('click', function () {
+    document.querySelectorAll('dialog[open]').forEach(function(dialog) {
+      dialog.close();
+    });
+
+    app.hidden = true;
+    entry.hidden = false;
+    window.scrollTo(0, 0);
+  });
+})();
+</script>
+  
 </html>
