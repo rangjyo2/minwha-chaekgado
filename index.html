@@ -843,13 +843,16 @@ const data = window.EXHIBITION_DATA;
 data.children.forEach(child => { if (!child.absent) child.audio = `${child.name}.m4a`; });
 const $ = (selector) => document.querySelector(selector);
 
-    const haonIndex = data.children.findIndex(child => child.name === "박하온");
-const seoyulIndex = data.children.findIndex(child => child.name === "최서율");
+   const data = window.EXHIBITION_DATA;
 
-if (haonIndex !== -1 && seoyulIndex !== -1) {
-  [data.children[haonIndex], data.children[seoyulIndex]] =
-  [data.children[seoyulIndex], data.children[haonIndex]];
-}
+data.children.forEach(child => {
+  if (!child.absent) child.audio = `${child.name}.m4a`;
+});
+
+data.children.sort((a, b) => Number(a.absent) - Number(b.absent));
+
+const $ = (selector) => document.querySelector(selector);
+    
     
 function applyExhibitionText() {
   document.title = data.title;
