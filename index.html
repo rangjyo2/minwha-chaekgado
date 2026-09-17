@@ -842,7 +842,7 @@ window.EXHIBITION_DATA = {
 </script>
   <script>
 const data = window.EXHIBITION_DATA;
-
+data.children.forEach(child => { if (!child.absent) child.audio = `${child.name}.m4a`; });
 const $ = (selector) => document.querySelector(selector);
 
 function applyExhibitionText() {
